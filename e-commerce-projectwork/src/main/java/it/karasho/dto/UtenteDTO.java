@@ -14,5 +14,9 @@ public class UtenteDTO {
 	private String conome;
 	
 	private String dataNascita;
+	
+	private String email;
+	
+	private String password;
 
 }

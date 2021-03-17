@@ -28,6 +28,12 @@ public class Utente {
 	@Column(name="dataNascita")
 	private String dataNascita;
 	
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="password")
+	private String password;
+	
 	
 
 }
