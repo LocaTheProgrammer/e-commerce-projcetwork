@@ -24,10 +24,10 @@ public class Articolo {
 	private String nome;
 	
 	@Column(name="descrizione")
-	private String descrzione;
+	private String descrizione;
 	
 	@Column(name="prezzo")
-	private String prezzo;
+	private double prezzo;
 	
 	
 	

@@ -1,19 +1,28 @@
 package it.karasho.dto;
 
-import lombok.Builder;
+import org.springframework.beans.BeanUtils;
+
+import it.karasho.entity.Articolo;
+
 import lombok.Data;
 
 @Data
-@Builder
 public class ArticoloDTO {
 	
 	private int id;
 	
 	private String nome;
 
-	private String descrzione;
+	private String descrizione;
 	
-	private String prezzo;
-	
+	private double prezzo;
+
+	public static ArticoloDTO build(Articolo a) {
+
+		ArticoloDTO result = new ArticoloDTO();
+		BeanUtils.copyProperties(a, result);
+
+		return result;
+	}
 	
 }

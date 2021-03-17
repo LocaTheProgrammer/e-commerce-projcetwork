@@ -1,10 +1,11 @@
 package it.karasho.dto;
 
-import lombok.Builder;
+import org.springframework.beans.BeanUtils;
+
+import it.karasho.entity.Magazzino;
 import lombok.Data;
 
 @Data
-@Builder
 public class MagazzinoDTO {
 
 	private int id;
@@ -12,5 +13,13 @@ public class MagazzinoDTO {
 	private int idArticolo;
 	
 	private int disponibilita;
+	
+	public static MagazzinoDTO build(Magazzino m) {
+
+		MagazzinoDTO result = new MagazzinoDTO();
+		BeanUtils.copyProperties(m, result);
+
+		return result;
+	}
 	
 }

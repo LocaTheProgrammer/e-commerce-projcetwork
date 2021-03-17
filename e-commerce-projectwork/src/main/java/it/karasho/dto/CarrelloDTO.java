@@ -1,10 +1,11 @@
 package it.karasho.dto;
 
-import lombok.Builder;
+import org.springframework.beans.BeanUtils;
+
+import it.karasho.entity.Carrello;
 import lombok.Data;
 
 @Data
-@Builder
 public class CarrelloDTO {
 	
 	private int id;
@@ -14,6 +15,13 @@ public class CarrelloDTO {
 	private int quantita;
 	
 	private int idUtente;
+	
+	public static CarrelloDTO build(Carrello c) {
 
+		CarrelloDTO result = new CarrelloDTO();
+		BeanUtils.copyProperties(c, result);
+
+		return result;
+	}
 
 }

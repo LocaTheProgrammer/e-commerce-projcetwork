@@ -22,8 +22,8 @@ public class Utente {
 	@Column(name="nome")
 	private String nome;
 
-	@Column(name="conome")
-	private String conome;
+	@Column(name="cognome")
+	private String cognome;
 	
 	@Column(name="dataNascita")
 	private String dataNascita;

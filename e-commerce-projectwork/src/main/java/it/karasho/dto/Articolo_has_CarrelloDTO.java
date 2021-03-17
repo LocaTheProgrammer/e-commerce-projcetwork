@@ -1,11 +1,12 @@
 package it.karasho.dto;
 
 
-import lombok.Builder;
+import org.springframework.beans.BeanUtils;
+
+import it.karasho.entity.Articolo_has_Carrello;
 import lombok.Data;
 
 @Data
-@Builder
 public class Articolo_has_CarrelloDTO {
 	
 	private int id;
@@ -16,4 +17,11 @@ public class Articolo_has_CarrelloDTO {
 	
 	private int quantitaArticoli;
 	
+	public static Articolo_has_CarrelloDTO build(Articolo_has_Carrello ahi) {
+
+		Articolo_has_CarrelloDTO result = new Articolo_has_CarrelloDTO();
+		BeanUtils.copyProperties(ahi, result);
+
+		return result;
+	}
 }
