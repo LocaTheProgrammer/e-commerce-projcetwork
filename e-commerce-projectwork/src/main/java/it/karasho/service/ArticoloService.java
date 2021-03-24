@@ -114,7 +114,7 @@ public class ArticoloService {
 			}
 
 			//update articolo
-			public Response<ArticoloDTO> updateArticolo(int id, String nome, String descrizione, double prezzo) {
+			public Response<ArticoloDTO> updateArticolo(int id, String nome, String descrizione, double prezzo, String foto) {
 
 				Response<ArticoloDTO> response = new Response<ArticoloDTO>();
 				try {
@@ -127,6 +127,9 @@ public class ArticoloService {
 						articolo.setDescrizione(descrizione);
 					if (prezzo+"" != null)
 						articolo.setPrezzo(prezzo);
+					
+					if (foto != null)
+						articolo.setFoto(foto);
 					
 					
 					this.articoloRepository.save(articolo);

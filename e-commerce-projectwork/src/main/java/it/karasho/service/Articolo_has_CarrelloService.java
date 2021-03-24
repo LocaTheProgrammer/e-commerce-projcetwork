@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,19 +112,6 @@ public class Articolo_has_CarrelloService {
 
 			}
 			
-			@Id
-			@Column(name = "id")
-			@GeneratedValue(strategy = GenerationType.IDENTITY)
-			private int id;
-			
-			@Column(name = "id_utente")
-			private int idUtente;
-			
-			@Column(name = "id_articolo")
-			private int idArticolo;
-			
-			@Column(name = "quantita_articoli")
-			private int quantitaArticoli;
 			
 
 			//update articolo_has_carrello

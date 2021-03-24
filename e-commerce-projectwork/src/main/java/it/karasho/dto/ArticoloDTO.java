@@ -16,6 +16,8 @@ public class ArticoloDTO {
 	private String descrizione;
 	
 	private double prezzo;
+	
+	private String foto;
 
 	public static ArticoloDTO build(Articolo a) {
 

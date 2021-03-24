@@ -29,6 +29,9 @@ public class Articolo {
 	@Column(name="prezzo")
 	private double prezzo;
 	
+	@Column(name="foto")
+	private String foto;
+	
 	
 	
 
