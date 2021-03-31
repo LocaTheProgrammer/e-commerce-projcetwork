@@ -21,6 +21,8 @@ public class ArticoloDTO {
 	
 	private String hot;
 	
+	private String taglia;
+	
 	public static ArticoloDTO build(Articolo a) {
 
 		ArticoloDTO result = new ArticoloDTO();
