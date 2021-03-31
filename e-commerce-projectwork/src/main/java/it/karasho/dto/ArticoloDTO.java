@@ -18,13 +18,17 @@ public class ArticoloDTO {
 	private double prezzo;
 	
 	private String foto;
-
+	
+	private String hot;
+	
 	public static ArticoloDTO build(Articolo a) {
 
 		ArticoloDTO result = new ArticoloDTO();
 		BeanUtils.copyProperties(a, result);
 
+		
 		return result;
 	}
+	
 	
 }

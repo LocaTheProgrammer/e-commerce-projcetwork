@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.karasho.dto.Response;
 import it.karasho.entity.Admin;
+
 import it.karasho.service.AdminService;
 
 @RestController
@@ -22,7 +23,7 @@ public class AdminRestController {
 
 
 	@Autowired
-	private AdminService userService;
+	private AdminService adminService;
 
 	@PostMapping("/create")
 	public Response<?> createAdmin(@RequestBody Admin admin){
@@ -32,7 +33,7 @@ public class AdminRestController {
 		log.info("nome "+ admin.getUsername());
 		log.info("nome "+ admin.getUsername());
 		log.info("ruolo "+ admin.getRoles());
-		return userService.createAdmin(admin);
+		return adminService.createAdmin(admin);
 	}
 
 
@@ -42,7 +43,7 @@ public class AdminRestController {
 
 		log.info("Richiesta delete.");
 
-		return userService.deleteAdminById(id);
+		return adminService.deleteAdminById(id);
 	}
 
 
@@ -51,14 +52,14 @@ public class AdminRestController {
 
 		log.info("richiesta di find all.");
 
-		return userService.findAllAdmins();
+		return adminService.findAllAdmins();
 	}
 	@GetMapping(path="/findAdminsPassword/{}")
 	public Response<?> findAllAdminsPassword(){
 
 		log.info("richiesta di find all.");
 
-		return userService.findAllAdmins();
+		return adminService.findAllAdmins();
 	}
 
 
@@ -66,7 +67,7 @@ public class AdminRestController {
 	public Response<?> findAdminById(@PathVariable int id){
 		log.info("trova da id");
 
-		return userService.findAdminById(id);
+		return adminService.findAdminById(id);
 	}
 
 	@PostMapping(path="/signIn")
@@ -75,7 +76,7 @@ public class AdminRestController {
 
 		
 
-		return userService.findAdminByAdminnameAndPassword(admin.getUsername(), admin.getPassword());
+		return adminService.findAdminByAdminnameAndPassword(admin.getUsername(), admin.getPassword());
 	}
 
 

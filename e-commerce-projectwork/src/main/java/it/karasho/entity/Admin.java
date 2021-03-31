@@ -9,14 +9,16 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
+
+
 @Entity
 @Table(name = "admin")
+@Data
 public class Admin {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "username")
@@ -28,9 +30,6 @@ public class Admin {
 	@Column(name = "roles")
 	private String roles;
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + "]";
-	}
+	
 	
 }

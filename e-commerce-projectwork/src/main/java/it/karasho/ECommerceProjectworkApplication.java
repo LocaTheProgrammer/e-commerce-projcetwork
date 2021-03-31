@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EntityScan(basePackages = "it.gestionalejaclsg.jac.entity")
+@EntityScan(basePackages = "it.karasho.entity")
 public class ECommerceProjectworkApplication {
 
 	public static void main(String[] args) {

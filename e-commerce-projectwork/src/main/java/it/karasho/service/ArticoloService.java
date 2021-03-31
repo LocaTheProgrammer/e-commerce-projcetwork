@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.karasho.controller.ArticoloRestController;
 import it.karasho.dao.ArticoloRepository;
 import it.karasho.dto.ArticoloDTO;
 import it.karasho.dto.Response;
@@ -17,7 +20,8 @@ public class ArticoloService {
 	
 	 @Autowired
 	 private ArticoloRepository articoloRepository;
-
+	 
+	 private static Logger log = LoggerFactory.getLogger(ArticoloService.class);
 	 
 	 final static String error = "Nessun articolo trovato.";
 		
@@ -89,6 +93,41 @@ public class ArticoloService {
 
 				return response;
 
+			}
+			
+			public Response<List<ArticoloDTO>> findAllHot() {
+
+				Response<List<ArticoloDTO>> response = new Response<List<ArticoloDTO>>();
+
+				List<ArticoloDTO> result = new ArrayList<>();
+
+				try {
+
+					Iterator<Articolo> iterator = this.articoloRepository.findAll().iterator();
+
+					while (iterator.hasNext()) {
+
+						Articolo articolo = iterator.next();
+						
+						if(articolo.getHot().equals("si")) {
+							log.info("articolo hot inserito");
+							result.add(ArticoloDTO.build(articolo));
+						}
+
+					}
+
+					response.setResult(result);
+					response.setResultTest(true);
+
+				} catch (Exception e) {
+
+					response.setError(error);
+
+				}
+				
+				return response;
+
+				
 			}
 
 			//find articolo by id

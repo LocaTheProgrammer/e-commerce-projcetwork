@@ -32,6 +32,9 @@ public class Articolo {
 	@Column(name="foto")
 	private String foto;
 	
+	@Column(name="hot")
+	private String hot;
+	
 	
 	
 

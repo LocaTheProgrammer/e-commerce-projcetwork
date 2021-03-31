@@ -42,6 +42,12 @@ public class ArticoloRestController {
 		return articoloService.findArticoloById(id);
 	}
 	
+	@GetMapping(path = "/findHot")
+	public Response<?> findAllHot() {
+		log.info("Ricevuta richiesta della lista di tutti gli articoli hot");
+		return articoloService.findAllHot();	
+	}
+	
 	@PostMapping(path="/update")
 	public Response<?> updateArticolo(@RequestBody Articolo a){
 		log.info("Ricevuta richiesta della update prodotto");
