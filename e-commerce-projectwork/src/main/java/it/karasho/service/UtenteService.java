@@ -111,6 +111,29 @@ public class UtenteService {
 				return response;
 
 			}
+			
+			public Response<UtenteDTO> loginUtente(String email, String password) {
+
+				Response<UtenteDTO> response = new Response<UtenteDTO>();
+
+				try {
+
+					Utente user = this.userRepository.findByEmail(email);
+					
+					if(user.getPassword().equals(password)) {						
+						response.setResult(UtenteDTO.build(user));
+						response.setResultTest(true);
+					}
+
+				} catch (Exception e) {
+
+					response.setError(error);
+
+				}
+
+				return response;
+
+			}
 
 			//update user
 			public Response<UtenteDTO> updateUtente(int id, String nome, String cognome, String dataNascita, String email, String password) {

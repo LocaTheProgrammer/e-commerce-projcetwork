@@ -7,5 +7,7 @@ import it.karasho.entity.Utente;
 
 @Repository
 public interface UtenteRepository extends CrudRepository<Utente, Integer> {
+	
+	public Utente findByEmail(String email);
 
 }

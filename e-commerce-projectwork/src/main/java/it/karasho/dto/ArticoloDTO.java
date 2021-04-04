@@ -21,7 +21,9 @@ public class ArticoloDTO {
 	
 	private String hot;
 	
-	private String taglia;
+	private String genere;
+	
+	private String variante;
 	
 	public static ArticoloDTO build(Articolo a) {
 

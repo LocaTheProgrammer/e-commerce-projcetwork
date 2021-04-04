@@ -53,5 +53,33 @@ public class UtenteRestController {
 		return utenteService.findAllUtentes();	
 	}
 	
+	@PostMapping(path="/logIn")
+	public Response<?> signIn(@RequestBody String body){
+		log.info("JSON --->"+body);
+
+		String email=null;
+		String passw=null;
+
+
+		int[] array=new int[9];
+		int conta=0;
+		for(int i=0; i<body.length(); i++) {
+			if(body.charAt(i)=='"') {
+				array[conta]=i;
+				conta++;
+			}
+			
+		}
+
+		email=body.substring(array[2]+1,array[3]);
+		passw=body.substring(array[6]+1,array[7]);
+
+
+		log.info("USERNAME: "+email+" PASSWORD: "+passw);
+		return utenteService.loginUtente(email, passw);
+
+	}
+	
+	
 
 }

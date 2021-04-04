@@ -14,7 +14,17 @@ public class CarrelloDTO {
 	
 	private int quantita;
 	
-	private int idUtente;
+	private String emailUtente;
+	
+	private String taglia;
+	
+	private String nome;
+
+	private String descrizione;
+	
+	private double prezzo;
+	
+	private String foto;
 	
 	public static CarrelloDTO build(Carrello c) {
 

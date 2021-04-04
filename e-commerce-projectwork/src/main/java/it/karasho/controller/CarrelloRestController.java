@@ -44,7 +44,7 @@ public class CarrelloRestController {
 	@PostMapping(path="/update")
 	public Response<?> updateCarrello(@RequestBody Carrello c){
 		log.info("Ricevuta richiesta della update carrello");
-		return carrelloService.updateCarrello(c.getId(), c.getIdArticolo(), c.getQuantita(), c.getIdUtente());
+		return carrelloService.updateCarrello(c.getId(), c.getIdArticolo(), c.getQuantita(), c.getEmailUtente());
 	}
 	
 	@GetMapping(path = "/findAll")

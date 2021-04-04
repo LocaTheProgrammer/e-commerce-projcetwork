@@ -35,9 +35,11 @@ public class Articolo {
 	@Column(name="hot")
 	private String hot;
 	
-	@Column(name="taglia")
-	private String taglia;
+	@Column(name="genere")
+	private String genere;
 	
+	@Column(name="varainte")
+	private String variante;
 	
 
 }

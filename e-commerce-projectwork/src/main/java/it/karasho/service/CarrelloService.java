@@ -18,7 +18,7 @@ public class CarrelloService {
 	@Autowired
 	private CarrelloRepository carrelloRepository;
 	
-final static String error = "Nessun carrello trovato.";
+	final static String error = "Nessun carrello trovato.";
 	
 	// create
 	
@@ -113,7 +113,7 @@ final static String error = "Nessun carrello trovato.";
 		}
 
 		//update carrello
-		public Response<CarrelloDTO> updateCarrello(int id, int idArticolo, int quantita, int idUtente) {
+		public Response<CarrelloDTO> updateCarrello(int id, int idArticolo, int quantita, String emailUtente) {
 
 			Response<CarrelloDTO> response = new Response<CarrelloDTO>();
 			try {
@@ -125,8 +125,8 @@ final static String error = "Nessun carrello trovato.";
 				if (quantita+"" != null)
 					carrello.setQuantita(quantita);
 
-				if (idUtente+"" != null)
-					carrello.setIdUtente(idUtente);
+				if (emailUtente!= null)
+					carrello.setEmailUtente(emailUtente);;
 				
 				
 				this.carrelloRepository.save(carrello);
