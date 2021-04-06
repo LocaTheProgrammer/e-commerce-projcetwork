@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import it.karasho.dao.CarrelloTotaleRepository;
 import it.karasho.dto.CarrelloTotaleDTO;
@@ -16,7 +19,7 @@ import it.karasho.entity.CarrelloTotale;
 public class CarrelloTotaleService {
 	@Autowired
 	private CarrelloTotaleRepository carrelloRepository;
-	
+	private static Logger log = LoggerFactory.getLogger(CarrelloTotaleService.class);
 	final static String error = "Nessun carrello trovato.";
 	
 	// create
@@ -27,7 +30,7 @@ public class CarrelloTotaleService {
 
 			try {
 				this.carrelloRepository.save(carrello); 
-
+				log.info("creazione carrello totale");
 				response.setResult(carrello);
 				response.setResultTest(true);
 
@@ -88,15 +91,70 @@ public class CarrelloTotaleService {
 			return response;
 
 		}
-
-		//find carrello by id
-		public Response<CarrelloTotaleDTO> findCarrelloTotaleById(int id) {
+		
+		// findLast
+//				public Response<CarrelloTotaleDTO> findLastTotale(String email) {
+//
+//					Response<List<CarrelloTotaleDTO>> response = new Response<List<CarrelloTotaleDTO>>();
+//				
+//					int last=0;
+//					try {
+//
+//						Iterator<CarrelloTotale> iterator = this.carrelloRepository.findAll().iterator();
+//
+//						while (iterator.hasNext()) {
+//
+//							CarrelloTotale ct = iterator.next();
+//							
+//							if(!iterator.hasNext()) {						
+//								
+//								last=ct.getId();
+//							}
+//
+//						}
+//						
+//
+//
+//					} catch (Exception e) {
+//
+//						response.setError(error);
+//
+//					}
+//					
+//					log.info("passaggio prima del return\nid last: "+last+"\n\n\n\n\n");
+//					return findCarrelloTotaleById(last);
+//
+//				}
+//		
+//		//find carrello by id
+//		public Response<CarrelloTotaleDTO> findCarrelloTotaleById(int id) {
+//
+//			Response<CarrelloTotaleDTO> response = new Response<CarrelloTotaleDTO>();
+//
+//			try {
+//
+//				CarrelloTotale carrello = this.carrelloRepository.findById(id).get();
+//
+//				response.setResult(CarrelloTotaleDTO.build(carrello));
+//				response.setResultTest(true);
+//
+//			} catch (Exception e) {
+//
+//				response.setError(error);
+//
+//			}
+//			log.info("resposne find last: "+response);
+//			return response;
+//
+//		}
+		
+		public Response<CarrelloTotaleDTO> findTotaleByEmail(String email) {
 
 			Response<CarrelloTotaleDTO> response = new Response<CarrelloTotaleDTO>();
 
 			try {
 
-				CarrelloTotale carrello = this.carrelloRepository.findById(id).get();
+				CarrelloTotale carrello = this.carrelloRepository.findByEmailUtente(email);
 
 				response.setResult(CarrelloTotaleDTO.build(carrello));
 				response.setResultTest(true);
@@ -106,40 +164,66 @@ public class CarrelloTotaleService {
 				response.setError(error);
 
 			}
-
+			
 			return response;
 
 		}
+		
+		public boolean checkIfCarrelloTotaleExists(String email) {
+			boolean found = false;
+			Response<List<CarrelloTotaleDTO>> response = new Response<List<CarrelloTotaleDTO>>();
 
-//		//update carrello
-//		public Response<CarrelloTotaleDTO> updateCarrelloTotale(int id, int idArticolo, int quantita, String emailUtente) {
-//
-//			Response<CarrelloTotaleDTO> response = new Response<CarrelloTotaleDTO>();
-//			try {
-//				CarrelloTotale carrello = this.carrelloRepository.findById(id).get();
-//
-//				if (idArticolo+"" != null)
-//					carrello.setIdArticolo(idArticolo);
-//				
-//				if (quantita+"" != null)
-//					carrello.setQuantita(quantita);
-//
-//				if (emailUtente!= null)
-//					carrello.setEmailUtente(emailUtente);;
-//				
-//				
-//				this.carrelloRepository.save(carrello);
-//				
-//				response.setResult(CarrelloTotaleDTO.build(carrello));
-//				response.setResultTest(true);
-//
-//			} catch (Exception e) {
-//				
-//				response.setError(error);
-//				
-//			}	
-//
-//			return response;
-//		}
+			List<CarrelloTotaleDTO> result = new ArrayList<>();
+
+			try {
+
+				Iterator<CarrelloTotale> iterator = this.carrelloRepository.findAll().iterator();
+
+				while (iterator.hasNext()) {
+					
+					CarrelloTotale carrello = iterator.next();
+					if(carrello.getEmailUtente().equals(email)) {
+						found=true;
+						response.setResult(result);
+						response.setResultTest(true);
+					}
+
+				}
+
+
+			} catch (Exception e) {
+
+				response.setError(error);
+
+			}
+
+			return found;
+
+
+		}
+
+		//update carrello
+		public Response<CarrelloTotaleDTO> updateCarrelloTotale(String emailUtente, double totale) {
+
+			Response<CarrelloTotaleDTO> response = new Response<CarrelloTotaleDTO>();
+			try {
+				CarrelloTotale carrello = this.carrelloRepository.findByEmailUtente(emailUtente);
+
+				carrello.setEmailUtente(emailUtente);
+				carrello.setTotale(totale);
+				
+				this.carrelloRepository.save(carrello);
+				
+				response.setResult(CarrelloTotaleDTO.build(carrello));
+				response.setResultTest(true);
+
+			} catch (Exception e) {
+				
+				response.setError(error);
+				
+			}	
+
+			return response;
+		}
 		
 }

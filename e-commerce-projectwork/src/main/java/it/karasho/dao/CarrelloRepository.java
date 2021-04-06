@@ -7,5 +7,5 @@ import it.karasho.entity.Carrello;
 
 @Repository
 public interface CarrelloRepository extends CrudRepository<Carrello, Integer> {
-
+	public Carrello findCarrelloByEmailUtente(String emailUtente);
 }

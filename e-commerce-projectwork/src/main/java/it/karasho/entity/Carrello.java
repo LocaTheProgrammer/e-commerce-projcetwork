@@ -43,6 +43,8 @@ public class Carrello {
 	@Column(name="email_utente")
 	private String emailUtente;
 	
+	@Column(name="totale")
+	private double totale;
 	
 
 }

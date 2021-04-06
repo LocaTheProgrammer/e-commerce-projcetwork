@@ -7,5 +7,5 @@ import it.karasho.entity.CarrelloTotale;
 
 @Repository
 public interface CarrelloTotaleRepository extends CrudRepository<CarrelloTotale, Integer>{
-
+	public CarrelloTotale findByEmailUtente(String email);
 }

@@ -14,14 +14,12 @@ import lombok.Data;
 @Data
 public class CarrelloTotale {
 	
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+
 	
 	@Column(name="totale")
 	private double totale;
 	
+	@Id
 	@Column(name="email_utente")
 	private String emailUtente;
 	

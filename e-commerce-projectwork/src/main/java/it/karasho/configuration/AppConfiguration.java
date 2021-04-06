@@ -32,10 +32,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter implements We
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		
-		registry.addMapping("/rest/user/**").allowedMethods("GET", "POST");
+		registry.addMapping("/rest/carrelloTotale/**").allowedMethods("GET", "POST");
 		registry.addMapping("/rest/utente/**").allowedMethods("GET", "POST");
 		registry.addMapping("/rest/admin/**").allowedMethods("GET", "POST");
-		registry.addMapping("/rest/preferiti/**").allowedMethods("GET", "POST");
+		registry.addMapping("/rest/carrello/**").allowedMethods("GET", "POST");
 		registry.addMapping("/rest/articolo/**").allowedMethods("GET", "POST");
 	}	
 

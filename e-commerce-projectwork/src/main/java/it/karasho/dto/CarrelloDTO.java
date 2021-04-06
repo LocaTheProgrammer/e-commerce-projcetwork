@@ -23,7 +23,7 @@ public class CarrelloDTO {
 	private String descrizione;
 	
 	private double prezzo;
-	
+	private double totale;
 	private String foto;
 	
 	public static CarrelloDTO build(Carrello c) {

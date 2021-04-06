@@ -27,10 +27,15 @@ public class UtenteService {
 				Response<Utente> response = new Response<Utente>();
 
 				try {
-					this.userRepository.save(user); 
+					if(this.checkEmail(user.getEmail())==false) {
+						
+						this.userRepository.save(user); 						
+						response.setResult(user);
+						response.setResultTest(true);
+					}else {
+						response.setError("user non creato");
 
-					response.setResult(user);
-					response.setResultTest(true);
+					}
 
 				} catch (Exception e) {
 					e.getStackTrace();
@@ -111,6 +116,40 @@ public class UtenteService {
 				return response;
 
 			}
+			
+			// findAll
+						public boolean checkEmail(String email) {
+							
+							boolean b=false;
+							Response<List<UtenteDTO>> response = new Response<List<UtenteDTO>>();
+
+							List<UtenteDTO> result = new ArrayList<>();
+
+							try {
+
+								Iterator<Utente> iterator = this.userRepository.findAll().iterator();
+
+								while (iterator.hasNext()) {
+
+									Utente user = iterator.next();
+									if(user.getEmail().equals(email))
+										b=true;
+									
+
+								}
+
+								response.setResult(result);
+								response.setResultTest(true);
+
+							} catch (Exception e) {
+
+								response.setError(error);
+
+							}
+
+							return b;
+
+						}
 			
 			public Response<UtenteDTO> loginUtente(String email, String password) {
 
