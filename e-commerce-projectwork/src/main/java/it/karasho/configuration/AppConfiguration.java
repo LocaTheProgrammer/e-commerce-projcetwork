@@ -37,6 +37,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter implements We
 		registry.addMapping("/rest/admin/**").allowedMethods("GET", "POST");
 		registry.addMapping("/rest/carrello/**").allowedMethods("GET", "POST");
 		registry.addMapping("/rest/articolo/**").allowedMethods("GET", "POST");
+		registry.addMapping("/rest/spedizione/**").allowedMethods("GET", "POST");
 	}	
 
 	@Bean

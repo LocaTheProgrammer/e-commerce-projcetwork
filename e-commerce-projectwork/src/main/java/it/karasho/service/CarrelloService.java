@@ -68,6 +68,27 @@ public class CarrelloService {
 			}
 			return response;
 		}
+		
+		// delete by email
+				public Response<String> deleteCarrelloByEmail(String email) {
+
+					Response<String> response = new Response<String>();
+
+					try {
+						Response<List<CarrelloDTO>> c=this.findJustAllCarrellosByEmail(email);
+						for(int i=0;i<c.getResult().size();i++) {
+							
+							this.carrelloRepository.deleteById(c.getResult().get(i).getId());
+						}
+						this.carrelloTotaleService.updateCarrelloTotale(email, 0);
+						response.setResult("carrello eliminato.");
+						response.setResultTest(true);
+
+					} catch (Exception e) {
+						response.setError("carrello non eliminato correttamente.");
+					}
+					return response;
+				}
 
 		// findAll
 		public Response<List<CarrelloDTO>> findAllCarrellos() {
@@ -99,6 +120,40 @@ public class CarrelloService {
 			return response;
 
 		}
+		
+		
+		// findAll
+				public Response<List<CarrelloDTO>> findJustAllCarrellosByEmail(String email) {
+
+					Response<List<CarrelloDTO>> response = new Response<List<CarrelloDTO>>();
+
+					List<CarrelloDTO> result = new ArrayList<>();
+
+					try {
+
+						Iterator<Carrello> iterator = this.carrelloRepository.findAll().iterator();
+
+						while (iterator.hasNext()) {
+
+							Carrello carrello = iterator.next();
+							if(carrello.getEmailUtente().equals(email)) {								
+								result.add(CarrelloDTO.build(carrello));
+							}
+
+						}
+
+						response.setResult(result);
+						response.setResultTest(true);
+
+					} catch (Exception e) {
+
+						response.setError(error);
+
+					}
+
+					return response;
+
+				}
 		
 		public Response<List<CarrelloDTO>> findCarrelloByEmail(String email) {
 			log.info("entro nel metodo findCarrelloByEmail");
@@ -144,6 +199,8 @@ public class CarrelloService {
 			return response;
 
 		}
+		
+	
 		
 		public Response<List<CarrelloDTO>> findCarrelloByEmailDelete(String email) {
 			log.info("entro nel metodo findCarrelloByEmail DELETE");
