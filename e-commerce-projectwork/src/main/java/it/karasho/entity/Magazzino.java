@@ -25,5 +25,8 @@ public class Magazzino {
 	@Column(name="disponibilita")
 	private int disponibilita;
 	
+	@Column(name="preorder")
+	private int preorder;
+	
 
 }

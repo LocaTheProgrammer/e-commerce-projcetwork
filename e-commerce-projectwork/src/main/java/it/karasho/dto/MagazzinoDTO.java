@@ -14,6 +14,8 @@ public class MagazzinoDTO {
 	
 	private int disponibilita;
 	
+	private int preorder;
+	
 	public static MagazzinoDTO build(Magazzino m) {
 
 		MagazzinoDTO result = new MagazzinoDTO();

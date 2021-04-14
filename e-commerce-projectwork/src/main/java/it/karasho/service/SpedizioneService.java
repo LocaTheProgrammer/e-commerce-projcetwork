@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import it.karasho.dao.SpedizioneRepository;
 import it.karasho.dto.Response;
 import it.karasho.dto.SpedizioneDTO;
+import it.karasho.entity.Articolo;
 import it.karasho.entity.Spedizione;
 
 
@@ -23,6 +24,8 @@ public class SpedizioneService {
 	private SpedizioneRepository spedizioneRepository;
 	@Autowired
 	private CarrelloService carrelloService;
+	@Autowired 
+	private MagazzinoService magazzinoService;
 	
 	 final static String error = "Nessun spedizione trovato.";
 		
@@ -31,13 +34,28 @@ public class SpedizioneService {
 			public Response<Spedizione> createSpedizione(Spedizione spedizione) {
 				
 				
-				
+				//if(magazzinoService.checIfIsPreorderById())
 				Response<Spedizione> response = new Response<Spedizione>();
 
 				try {
 					
-						
+						String[] a=spedizione.getIdArticoli().split(";");
+						String[] q=spedizione.getQuantita().split(";");
 						this.spedizioneRepository.save(spedizione);
+						
+						for(int i=0;i<a.length;i++) {
+							if(magazzinoService.checIfIsPreorderById(Integer.parseInt(a[i]))) {
+								magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), 0, Integer.parseInt(q[i]));
+							}else {
+								if(magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getDisponibilita()-Integer.parseInt(q[i])<0) {
+									magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), 0, Integer.parseInt(q[i]));
+								}else {									
+									magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getDisponibilita()-Integer.parseInt(q[i]), magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getPreorder());
+								}
+							}
+							
+						}
+						
 						this.carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 						response.setResult(spedizione);
 						response.setResultTest(true);

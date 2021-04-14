@@ -44,12 +44,12 @@ public class MagazzinoRestController {
 	@PostMapping(path="/update")
 	public Response<?> updateMagazzino(@RequestBody Magazzino m){
 		log.info("Ricevuta richiesta della update magazzino");
-		return magazzinoService.updateMagazzino(m.getId(), m.getIdArticolo(), m.getDisponibilita());
+		return magazzinoService.updateMagazzino(m.getId(), m.getIdArticolo(), m.getDisponibilita(), m.getPreorder());
 	}
 	
 	@GetMapping(path = "/findAll")
 	public Response<?> findAllArticoli() {
-		log.info("Ricevuta richiesta della lista di tutti gli articoli");
+		log.info("Ricevuta richiesta della lista di MAGAZZINO");
 		return magazzinoService.findAllMagazzinos();	
 	}
 	

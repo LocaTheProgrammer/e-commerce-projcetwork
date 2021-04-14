@@ -113,9 +113,35 @@ public class MagazzinoService {
 				return response;
 
 			}
+			public boolean checIfIsPreorderById(int id) {
+
+				boolean isPreorder=false;
+				Response<MagazzinoDTO> response = new Response<MagazzinoDTO>();
+
+				try {
+
+					Magazzino magazzino = this.magazzinoRepository.findById(id).get();
+					if(magazzino.getDisponibilita()==0) {
+						isPreorder=true;
+					}
+					response.setResult(MagazzinoDTO.build(magazzino));
+					response.setResultTest(true);
+
+				} catch (Exception e) {
+
+					response.setError(error);
+
+				}
+
+				return isPreorder;
+
+			}
+			
+			
+			
 
 			//update magazzino
-			public Response<MagazzinoDTO> updateMagazzino(int id, int idArticolo, int disponibilita) {
+			public Response<MagazzinoDTO> updateMagazzino(int id, int idArticolo, int disponibilita, int preorder) {
 
 				Response<MagazzinoDTO> response = new Response<MagazzinoDTO>();
 				try {
@@ -126,6 +152,9 @@ public class MagazzinoService {
 					
 					if (disponibilita+"" != null)
 						magazzino.setDisponibilita(disponibilita);
+					
+					if (preorder+"" != null)
+						magazzino.setPreorder(preorder);
 					
 					
 					this.magazzinoRepository.save(magazzino);
