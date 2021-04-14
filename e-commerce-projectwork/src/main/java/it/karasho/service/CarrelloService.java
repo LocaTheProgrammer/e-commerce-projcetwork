@@ -59,6 +59,7 @@ public class CarrelloService {
 
 			try {
 				this.carrelloRepository.deleteById(id);
+				
 				this.findCarrelloByEmailDelete(email);
 				response.setResult("carrello eliminato.");
 				response.setResultTest(true);
@@ -183,6 +184,8 @@ public class CarrelloService {
 							carrelloTotaleService.updateCarrelloTotale(email, totale);
 						}
 						result.add(CarrelloDTO.build(carrello));
+					}else {
+						this.carrelloTotaleService.updateCarrelloTotale(email, 0);
 					}
 
 				}
@@ -213,30 +216,36 @@ public class CarrelloService {
 			try {
 
 				Iterator<Carrello> iterator = this.carrelloRepository.findAll().iterator();
-
-				while (iterator.hasNext()) {
+				if(iterator.hasNext()) {
 					
-					Carrello carrello = iterator.next();
-					if(carrello.getEmailUtente().equals(email)) {
-						log.info("trovato il carrello per l'utente: "+email);
+					while (iterator.hasNext()) {
 						
-						//devo fare un if per controllare se il carrello totale esiste gia
-						//se esiste lo updato se no lo creo
-						if(!carrelloTotaleService.checkIfCarrelloTotaleExists(email)) {
-							carrelloTotaleService.updateCarrelloTotale(email, 0);
-							result.add(CarrelloDTO.build(carrello));
+						Carrello carrello = iterator.next();
+						if(carrello.getEmailUtente().equals(email)) {
+							log.info("trovato il carrello per l'utente: "+email);
+							
+							//devo fare un if per controllare se il carrello totale esiste gia
+							//se esiste lo updato se no lo creo
+							if(!carrelloTotaleService.checkIfCarrelloTotaleExists(email)) {
+								carrelloTotaleService.updateCarrelloTotale(email, 0);
+								result.add(CarrelloDTO.build(carrello));
+							}else {
+								totale+=carrello.getPrezzo()*carrello.getQuantita();
+								carrelloTotale.setEmailUtente(email);
+								carrelloTotale.setTotale(totale);
+								carrelloTotaleService.updateCarrelloTotale(email, totale);
+								result.add(CarrelloDTO.build(carrello));
+							}
+							
 						}else {
-							totale+=carrello.getPrezzo()*carrello.getQuantita();
-							carrelloTotale.setEmailUtente(email);
-							carrelloTotale.setTotale(totale);
-							carrelloTotaleService.updateCarrelloTotale(email, totale);
-							result.add(CarrelloDTO.build(carrello));
+							log.info("update carrello totale nel DELETE: "+ email+" 0");
+							this.carrelloTotaleService.updateCarrelloTotale(email, 0);
 						}
 						
-					}else {
-						carrelloTotaleService.updateCarrelloTotale(email, 0);
 					}
-
+				}else {
+					log.info("update carrello totale nel DELETE ELSE : "+ email+" 0");
+					this.carrelloTotaleService.updateCarrelloTotale(email, 0);
 				}
 
 				response.setResult(result);

@@ -55,6 +55,9 @@ public class CarrelloRestController {
 
 		String id = body.substring(arr[2] + 1, arr[3]);
 		String email = body.substring(arr[6] + 1, arr[7]);
+		
+		log.info("id: "+id);
+		log.info("email: "+email);
 		int idInt=Integer.parseInt(id);
 	return carrelloService.deleteCarrelloById(idInt, email);
 	}
