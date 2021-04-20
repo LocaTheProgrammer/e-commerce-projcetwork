@@ -117,6 +117,27 @@ public class UtenteService {
 
 			}
 			
+			public Response<UtenteDTO> findUtenteByEmail(String email) {
+
+				Response<UtenteDTO> response = new Response<UtenteDTO>();
+
+				try {
+
+					Utente user = this.userRepository.findByEmail(email);
+
+					response.setResult(UtenteDTO.build(user));
+					response.setResultTest(true);
+
+				} catch (Exception e) {
+
+					response.setError(error);
+
+				}
+
+				return response;
+
+			}
+			
 			// findAll
 						public boolean checkEmail(String email) {
 							

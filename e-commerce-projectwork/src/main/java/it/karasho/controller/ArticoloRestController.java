@@ -51,6 +51,8 @@ public class ArticoloRestController {
 	@PostMapping(path="/update")
 	public Response<?> updateArticolo(@RequestBody Articolo a){
 		log.info("Ricevuta richiesta della update prodotto");
+		a.setFoto(articoloService.findArticoloById(a.getId()).getResult().getFoto());
+		log.info("articolo"+a);
 		return articoloService.updateArticolo(a.getId(), a.getNome(), a.getDescrizione(), a.getPrezzo(), a.getFoto());
 	}
 	

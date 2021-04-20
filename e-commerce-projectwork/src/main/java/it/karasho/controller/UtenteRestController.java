@@ -44,6 +44,7 @@ public class UtenteRestController {
 	@PostMapping(path="/update")
 	public Response<?> updateUtente(@RequestBody Utente u){
 		log.info("Ricevuta richiesta della update utente");
+		u.setId(utenteService.findUtenteByEmail(u.getEmail()).getResult().getId());
 		return utenteService.updateUtente(u.getId(), u.getNome(), u.getCognome(), u.getDataNascita(), u.getEmail(), u.getPassword());
 	}
 	
