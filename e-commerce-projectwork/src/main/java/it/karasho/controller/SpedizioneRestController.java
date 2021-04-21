@@ -38,7 +38,7 @@ public class SpedizioneRestController {
 	public Response<?> createSpedizione(@RequestBody Spedizione s){
 		log.info("Ricevuta richiesta della spedizione");
 	
-		log.info("spedizione: "+s);
+		
 		String idArticoli="";
 		String quantita="";
 		Response<CarrelloTotaleDTO> cTot=carrelloTotaleService.findTotaleByEmail(s.getEmailUtente());

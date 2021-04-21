@@ -4,22 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.karasho.dao.SpedizioneRepository;
 import it.karasho.dto.Response;
 import it.karasho.dto.SpedizioneDTO;
-import it.karasho.entity.Articolo;
+
 import it.karasho.entity.Spedizione;
 
 
 
 @Service
 public class SpedizioneService {
-	private static Logger log = LoggerFactory.getLogger(SpedizioneService.class);
+	//private static Logger log = LoggerFactory.getLogger(SpedizioneService.class);
 	@Autowired
 	private SpedizioneRepository spedizioneRepository;
 	@Autowired
@@ -46,17 +45,20 @@ public class SpedizioneService {
 						for(int i=0;i<a.length;i++) {
 							if(magazzinoService.checIfIsPreorderById(Integer.parseInt(a[i]))) {
 								magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), 0, Integer.parseInt(q[i]));
+								carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 							}else {
 								if(magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getDisponibilita()-Integer.parseInt(q[i])<0) {
 									magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), 0, Integer.parseInt(q[i]));
+									carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 								}else {									
 									magazzinoService.updateMagazzino(Integer.parseInt(a[i]), Integer.parseInt(a[i]), magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getDisponibilita()-Integer.parseInt(q[i]), magazzinoService.findMagazzinoById(Integer.parseInt(a[i])).getResult().getPreorder());
+									carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 								}
 							}
 							
 						}
 						
-						this.carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
+						carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 						response.setResult(spedizione);
 						response.setResultTest(true);
 					
@@ -64,6 +66,7 @@ public class SpedizioneService {
 				} catch (Exception e) {
 					e.getStackTrace();
 					response.setError("spedizione non creato");
+					carrelloService.deleteCarrelloByEmail(spedizione.getEmailUtente());
 
 				}
 
@@ -72,6 +75,7 @@ public class SpedizioneService {
 			}
 
 			// delete
+			
 			public Response<String> deleteSpedizioneById(int id) {
 
 				Response<String> response = new Response<String>();
@@ -141,96 +145,5 @@ public class SpedizioneService {
 
 			}
 			
-			// findAll
-//						public boolean checkEmail(String email) {
-//							
-//							boolean b=false;
-//							Response<List<SpedizioneDTO>> response = new Response<List<SpedizioneDTO>>();
-//
-//							List<SpedizioneDTO> result = new ArrayList<>();
-//
-//							try {
-//
-//								Iterator<Spedizione> iterator = this.spedizioneRepository.findAll().iterator();
-//
-//								while (iterator.hasNext()) {
-//
-//									Spedizione spedizione = iterator.next();
-//									if(spedizione.getEmail().equals(email))
-//										b=true;
-//									
-//
-//								}
-//
-//								response.setResult(result);
-//								response.setResultTest(true);
-//
-//							} catch (Exception e) {
-//
-//								response.setError(error);
-//
-//							}
-//
-//							return b;
-//
-//						}
-			
-//			public Response<SpedizioneDTO> loginSpedizione(String email, String password) {
-//
-//				Response<SpedizioneDTO> response = new Response<SpedizioneDTO>();
-//
-//				try {
-//
-//					Spedizione spedizione = this.spedizioneRepository.findByEmail(email);
-//					
-//					if(spedizione.getPassword().equals(password)) {						
-//						response.setResult(SpedizioneDTO.build(spedizione));
-//						response.setResultTest(true);
-//					}
-//
-//				} catch (Exception e) {
-//
-//					response.setError(error);
-//
-//				}
-//
-//				return response;
-//
-//			}
 
-			//update spedizione
-//			public Response<SpedizioneDTO> updateSpedizione(int id, String nome, String cognome, String dataNascita, String email, String password) {
-//
-//				Response<SpedizioneDTO> response = new Response<SpedizioneDTO>();
-//				try {
-//					Spedizione spedizione = this.spedizioneRepository.findById(id).get();
-//
-//					if (nome != null)
-//						spedizione.setNome(nome);
-//					
-//					if (cognome != null)
-//						spedizione.setCognome(cognome);
-//					
-//					if (dataNascita != null)
-//						spedizione.setDataNascita(dataNascita);
-//					
-//					if (email != null)
-//						spedizione.setEmail(email);
-//					
-//					if (password != null)
-//						spedizione.setPassword(password);
-//					
-//					this.spedizioneRepository.save(spedizione);
-//					
-//					response.setResult(SpedizioneDTO.build(spedizione));
-//					response.setResultTest(true);
-//
-//				} catch (Exception e) {
-//					
-//					response.setError(error);
-//					
-//				}	
-//
-//				return response;
-//			}
 }

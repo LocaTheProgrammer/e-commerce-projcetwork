@@ -72,6 +72,7 @@ public class CarrelloService {
 		
 		// delete by email
 				public Response<String> deleteCarrelloByEmail(String email) {
+					log.info("entro nel metodo delete by email");
 
 					Response<String> response = new Response<String>();
 
@@ -88,6 +89,7 @@ public class CarrelloService {
 					} catch (Exception e) {
 						response.setError("carrello non eliminato correttamente.");
 					}
+					log.info("response delete: "+response);
 					return response;
 				}
 
